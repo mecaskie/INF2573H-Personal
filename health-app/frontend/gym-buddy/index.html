@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#10271d" />
+    <title>Gym Buddy — Personal fitness co-pilot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="onboarding" id="onboarding" aria-labelledby="welcome-title">
+        <header class="brand-row"><div class="brand"><b>g</b>gym buddy</div><span id="onboard-step">01 / 03</span></header>
+        <div class="onboard-progress"><i id="onboard-progress"></i></div>
+
+        <section class="onboard-panel active" data-step="1">
+          <span class="eyebrow">YOUR FITNESS CO-PILOT</span>
+          <h1 id="welcome-title">Your body. <em>Your plan.</em></h1>
+          <p class="lede">Personal training and food guidance that adapts to how you feel—not a one-size-fits-all routine.</p>
+          <div class="feature-list"><p><span>✦</span> Health-aware workout recommendations</p><p><span>◌</span> Daily fuel and macro guidance</p><p><span>↗</span> An AI coach that adjusts with you</p></div>
+          <button class="button primary next-step" type="button">Build my plan <span>→</span></button>
+          <p class="privacy">Demo app · uses synthetic sample data only</p>
+        </section>
+
+        <section class="onboard-panel" data-step="2" aria-labelledby="goal-title">
+          <span class="eyebrow">START WITH YOUR WHY</span>
+          <h2 id="goal-title">What feels most important right now?</h2>
+          <p class="lede compact">You can change this whenever your goal changes.</p>
+          <div class="choice-stack" role="radiogroup" aria-label="Fitness goal">
+            <button class="goal-choice selected" type="button" data-goal="lose" role="radio" aria-checked="true"><i>↘</i><span><strong>Lose fat, keep strength</strong><small>A sustainable deficit with strength training</small></span><b>✓</b></button>
+            <button class="goal-choice" type="button" data-goal="build" role="radio" aria-checked="false"><i>↑</i><span><strong>Build muscle</strong><small>Progressive training with recovery and fuel</small></span><b>✓</b></button>
+            <button class="goal-choice" type="button" data-goal="move" role="radio" aria-checked="false"><i>⌁</i><span><strong>Move and feel better</strong><small>Strength, mobility, and everyday energy</small></span><b>✓</b></button>
+          </div>
+          <div class="split-actions"><button class="button ghost previous-step" type="button">Back</button><button class="button primary next-step" type="button">Continue <span>→</span></button></div>
+        </section>
+
+        <section class="onboard-panel" data-step="3" aria-labelledby="profile-title">
+          <span class="eyebrow">A LITTLE CONTEXT</span>
+          <h2 id="profile-title">Help us plan safely.</h2>
+          <p class="lede compact">This is general fitness guidance, not medical care.</p>
+          <div class="field-grid">
+            <label>Age<input id="age" type="number" min="16" max="100" value="28" /></label>
+            <label>Sex<select id="sex"><option value="female">Female</option><option value="male">Male</option><option value="other">Non-binary / other</option></select></label>
+            <label>Height <small>cm</small><input id="height" type="number" min="120" max="230" value="168" /></label>
+            <label>Weight <small>kg</small><input id="weight" type="number" min="35" max="300" value="68" /></label>
+          </div>
+          <label class="field-label">Anything to plan around? <small>select any</small></label>
+          <div class="health-grid" id="health-options">
+            <button type="button" data-health="Knee sensitivity"><span>◒</span>Knee sensitivity</button><button type="button" data-health="Back care"><span>⌁</span>Back care</button><button type="button" data-health="New to training"><span>○</span>New to training</button><button type="button" data-health="Low energy"><span>◌</span>Low energy</button>
+          </div>
+          <label class="field-label" for="condition-note">Current condition or note <small>optional</small></label>
+          <textarea id="condition-note" rows="2" placeholder="e.g. Mild stiffness after working at my desk"></textarea>
+          <div class="split-actions"><button class="button ghost previous-step" type="button">Back</button><button class="button primary" id="finish-onboarding" type="button">Create my plan <span>→</span></button></div>
+        </section>
+      </section>
+
+      <section class="app hidden" id="app" aria-live="polite">
+        <header class="topbar"><button class="brand brand-button" data-view="today" type="button"><b>g</b>gym buddy</button><button class="avatar" id="profile-button" type="button" aria-label="Edit profile">MC</button></header>
+
+        <section class="view active" id="today-view" data-view-panel="today">
+          <span class="eyebrow" id="date-label">TODAY</span>
+          <h1>Move with <em>purpose.</em></h1>
+          <p class="welcome-copy" id="today-subtitle">Your plan is built around the life and body you have today.</p>
+          <section class="readiness-card"><div><span class="eyebrow light">DAILY CHECK-IN</span><h3 id="readiness-title">How are you feeling?</h3><p id="readiness-copy">Your coach will adjust today’s session.</p></div><span class="pulse">✦</span></section>
+          <div class="readiness-options" role="group" aria-label="Daily readiness"><button data-readiness="ready" type="button">Energized</button><button data-readiness="steady" class="selected" type="button">Steady</button><button data-readiness="tired" type="button">Tired / sore</button><button data-readiness="recovering" type="button">Flare-up</button></div>
+          <label class="range-label" for="sleep">Sleep last night <b id="sleep-value">7 hrs</b></label><input class="range" id="sleep" type="range" min="3" max="10" value="7" />
+
+          <section class="ai-summary"><div class="ai-icon">✦</div><div><span class="eyebrow">GYM BUDDY AGENT</span><h3 id="agent-headline">Your best-fit plan is ready</h3><p id="agent-summary">I’m balancing strength, cardio, and recovery around your goal.</p></div></section>
+          <section class="section-title"><div><span class="eyebrow">TODAY'S SESSION</span><h2 id="today-workout-title">Full-body strength</h2></div><button class="text-button" data-view="plan" type="button">Full plan →</button></section>
+          <button class="workout-preview" id="start-workout" type="button"><span class="session-day">D1</span><span><strong id="today-workout-meta">45 min · Guided</strong><small id="today-workout-detail">Strength foundations + core</small></span><i>→</i></button>
+          <section class="fuel-strip"><div><span class="eyebrow">FUEL TARGET</span><strong id="fuel-target">1,850 <small>kcal</small></strong><p id="fuel-caption">A gentle deficit, made to preserve strength.</p></div><button class="circle-button" data-view="fuel" type="button" aria-label="Open nutrition plan">↗</button></section>
+        </section>
+
+        <section class="view" id="plan-view" data-view-panel="plan">
+          <span class="eyebrow">ADAPTIVE WORKOUT PLAN</span><h1 id="plan-name">Foundation strength</h1><p class="welcome-copy" id="plan-description">An adaptable week that builds confidence and momentum.</p>
+          <section class="plan-hero"><div class="plan-top"><span id="plan-tag">STEADY FAT LOSS</span><span id="plan-adapt">● ADAPTABLE</span></div><div class="plan-stats"><div><b id="plan-days">3</b><small>days / week</small></div><div><b id="plan-minutes">45</b><small>min / session</small></div><div><b id="plan-intensity">LOW</b><small>intensity</small></div></div></section>
+          <section class="section-title"><div><span class="eyebrow">YOUR WEEK</span><h2>Training rhythm</h2></div><span class="muted">Tap to complete</span></section>
+          <div class="session-list" id="session-list"></div>
+          <section class="care-note"><span>♡</span><p id="care-note">Health-aware note: your agent will offer low-impact options when needed.</p></section>
+        </section>
+
+        <section class="view" id="fuel-view" data-view-panel="fuel">
+          <span class="eyebrow">NUTRITION PLAN</span><h1>Fuel your <em>effort.</em></h1><p class="welcome-copy" id="fuel-intro">A flexible target based on your goal, movement, and check-in.</p>
+          <section class="calorie-card"><div><span class="eyebrow">TODAY'S TARGET</span><strong id="calorie-target">1,850 <small>kcal</small></strong><p id="calorie-note">Measured support for your goal.</p></div><div class="calorie-ring"><b id="calorie-remaining">1,850</b><small>left</small></div></section>
+          <div class="macro-grid"><div><span>Protein</span><b id="protein-target">109g</b><i><em id="protein-bar"></em></i></div><div><span>Carbs</span><b id="carb-target">205g</b><i><em id="carb-bar"></em></i></div><div><span>Fat</span><b id="fat-target">62g</b><i><em id="fat-bar"></em></i></div></div>
+          <section class="section-title"><div><span class="eyebrow">MEAL LOG</span><h2>What you've had</h2></div><button class="text-button" id="add-meal" type="button">+ Add</button></section>
+          <div id="meal-list" class="meal-list"></div>
+          <section class="suggestion"><span>✦</span><div><b>Coach suggestion</b><p id="food-suggestion">Include protein at your next meal to support training recovery.</p></div></section>
+        </section>
+
+        <section class="view" id="coach-view" data-view-panel="coach">
+          <span class="eyebrow">AI WORKOUT ASSISTANT</span><h1>Ask your <em>coach.</em></h1><p class="welcome-copy">A transparent demo agent that uses your profile, readiness, and health notes to tailor general guidance.</p>
+          <div class="chat" id="chat-log"><article class="coach-message"><span>✦</span><p id="coach-welcome">I’ve reviewed your plan. What would help you feel more confident about today?</p></article></div>
+          <div class="prompt-grid"><button type="button" data-prompt="swap">Give me a lower-impact option</button><button type="button" data-prompt="form">How should this session feel?</button><button type="button" data-prompt="food">What should I eat after?</button><button type="button" data-prompt="adjust">Why did my plan change?</button></div>
+          <form class="chat-form" id="coach-form"><label class="sr-only" for="coach-input">Ask Gym Buddy</label><input id="coach-input" placeholder="Ask about your workout…" autocomplete="off" /><button type="submit" aria-label="Send message">↑</button></form>
+          <p class="disclaimer">Gym Buddy provides general educational fitness guidance. Stop if you feel pain and contact a qualified clinician for medical concerns.</p>
+        </section>
+
+        <nav class="bottom-nav" aria-label="Main navigation"><button type="button" class="active" data-view="today"><span>⌂</span>Today</button><button type="button" data-view="plan"><span>◫</span>Plan</button><button type="button" data-view="fuel"><span>◌</span>Fuel</button><button type="button" data-view="coach"><span>✦</span>Coach</button></nav>
+      </section>
+    </main>
+    <dialog id="workout-dialog"><form method="dialog"><button class="dialog-close" value="close" aria-label="Close workout">×</button><span class="eyebrow">GUIDED SESSION</span><h2 id="dialog-title">Full-body strength</h2><p id="dialog-intro">Move with a controlled range and stop if anything hurts.</p><ol id="exercise-list"></ol><button id="finish-workout" class="button primary" value="complete" type="submit">Mark workout complete <span>✓</span></button></form></dialog>
+    <dialog id="meal-dialog"><form method="dialog"><button class="dialog-close" value="close" aria-label="Close meal entry">×</button><span class="eyebrow">QUICK MEAL LOG</span><h2>Add a meal</h2><label>Meal name<input id="meal-name" value="Protein bowl" /></label><label>Calories<input id="meal-calories" type="number" min="0" value="420" /></label><label>Protein (g)<input id="meal-protein" type="number" min="0" value="28" /></label><button id="save-meal" class="button primary" value="save" type="submit">Add to my day <span>→</span></button></form></dialog>
+    <script src="app.js"></script>
+  </body>
+</html>
